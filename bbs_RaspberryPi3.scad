@@ -1,4 +1,4 @@
-use <Basic/bbs_pins.scad>
+use <bbs_pins.scad>
 //
 // Module for a Raspberry Pi 3
 //

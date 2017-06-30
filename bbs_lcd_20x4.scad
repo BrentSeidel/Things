@@ -1,4 +1,4 @@
-use <Basic/bbs_pins.scad>
+use <bbs_pins.scad>
 //
 // Model for a 20x4 LCD
 // AdaFruit item #198
@@ -24,4 +24,4 @@ module bbs_20x4_lcd()
   }
 }
 
-color("red") bbs_20x4_lcd();
+bbs_20x4_lcd();

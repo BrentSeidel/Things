@@ -26,14 +26,14 @@ module bbs_spdt_switch()
     }
 }
 
-module bbs_spdt_switch_cutout()
+module bbs_spdt_switch_cutout(height)
 {
     difference()
     {
-        translate([0, 0, -1.0]) cylinder(h=34.0, r=5.75/2, $fn=20);
-        translate([-5.75/2, -0.55/2, -2.0]) cube([0.1, 0.55/2, 5.0]);
+        translate([0, 0, -1.0]) cylinder(h=height + 1, r=5.75/2 + 0.1, $fn=20);
+        translate([-5.75/2 - 0.2, -0.55/2, -2.0]) cube([0.3, 0.55/2, height + 4]);
     }
 }
 
-bbs_spdt_switch();
-//bbs_spdt_switch_cutout();
+//bbs_spdt_switch();
+bbs_spdt_switch_cutout(2);

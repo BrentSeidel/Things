@@ -18,7 +18,7 @@ module bbs_led_mount(diameter, height)
         }
         union()
         {
-            translate([0, 0, -0.5]) cylinder(h=height + 1, r=diameter/2 - 0.1, $fn=20);
+            translate([0, 0, -0.5]) cylinder(h=height + 1, r=diameter/2 - 0.2, $fn=20);
             translate([0.0, -0.5, -0.5]) cube([diameter/2+1.2, 1.0, height + 1]);
         }
     }

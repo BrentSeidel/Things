@@ -10,9 +10,8 @@ module bbs_20x4_lcd()
     union()
     {
       cube([98, 60, 2], center=false);
-      translate(v=[0, 10, 0]) cube([98, 40, 11], center=false);
-//      translate(v=[10, 3, -7]) cube([40, 1, 11], center=false);
-      translate(v=[49, 3, ]) bbs_header(16);;
+      translate([0, 10, 0]) cube([98, 40, 11]);
+      translate([49, 3, ]) bbs_header(16);;
     }
     union()
     {
@@ -24,4 +23,17 @@ module bbs_20x4_lcd()
   }
 }
 
+module bbs_20x4_lcd_cutouts(height, facets)
+{
+    union()
+    {
+      translate([0, 10, 0]) cube([98, 40, height]);
+      translate([4, 4, 0]) cylinder(h=height, r=2, $fn=facets);
+      translate([4, 56, 0]) cylinder(h=height, r=2, $fn=facets);
+      translate([94, 4, 0]) cylinder(h=height, r=2, $fn=facets);
+      translate([94, 56, 0]) cylinder(h=height, r=2, $fn=facets);
+    }
+}
+
 bbs_20x4_lcd();
+translate([0, 0, -2]) color("red") bbs_20x4_lcd_cutouts(2, 20);

@@ -1,6 +1,7 @@
 use <bbs_pins.scad>
 //
-// Module for a Raspberry Pi 3
+// Module for a Raspberry Pi 3.  This will probably also work for the Pi 2.  The large block over the
+// processor is the space for a heatsink.
 //
 length = 85;
 width = 56.11;

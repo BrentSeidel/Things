@@ -42,7 +42,7 @@ module bbs_d_cutout(size, height)
         echo("bbs_connectors.scad Invalid size given for D-sub connector ", size);
 //        assert(false); // Assert may not be supported yet
     }
-    screw_rad = 0.125 * 25.4;
+    screw_rad = 0.125 * 25.4/2;
     corner_rad = 0.063 * 25.4;
     c_sizes = [24.87, 33.45, 47.17, 63.63, 61.24, 63.63];
     h_sizes = [19.53, 27.76, 41.53, 57.96, 55.59, 58.72];

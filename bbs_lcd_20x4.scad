@@ -15,10 +15,10 @@ module bbs_20x4_lcd()
     }
     union()
     {
-      translate([4, 4, -1]) cylinder(h=4, r=2);
-      translate([4, 56, -1]) cylinder(h=4, r=2);
-      translate([94, 4, -1]) cylinder(h=4, r=2);
-      translate([94, 56, -1]) cylinder(h=4, r=2);
+      translate([3, 3, -1]) cylinder(h=4, r=2);
+      translate([3, 57, -1]) cylinder(h=4, r=2);
+      translate([95, 3, -1]) cylinder(h=4, r=2);
+      translate([95, 57, -1]) cylinder(h=4, r=2);
     }
   }
 }
@@ -28,10 +28,10 @@ module bbs_20x4_lcd_cutouts(height, facets)
     union()
     {
       translate([0, 10, 0]) cube([98, 40, height]);
-      translate([4, 4, 0]) cylinder(h=height, r=2, $fn=facets);
-      translate([4, 56, 0]) cylinder(h=height, r=2, $fn=facets);
-      translate([94, 4, 0]) cylinder(h=height, r=2, $fn=facets);
-      translate([94, 56, 0]) cylinder(h=height, r=2, $fn=facets);
+      translate([3, 3, 0]) cylinder(h=height, r=2, $fn=facets);
+      translate([3, 57, 0]) cylinder(h=height, r=2, $fn=facets);
+      translate([95, 3, 0]) cylinder(h=height, r=2, $fn=facets);
+      translate([95, 57, 0]) cylinder(h=height, r=2, $fn=facets);
     }
 }
 

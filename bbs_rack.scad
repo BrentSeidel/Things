@@ -6,15 +6,22 @@ use <bbs_shapes.scad>
 use <bbs_tray.scad>
 use <bbs_panel.scad>
 
-//height = 115;
 width = 161;
 length = 200;
 screw = 4.1/2;
+//
+// Set this to be a reasonable height limit for your printer
+//
+arbitrary_printer_limit = 150;
 
 module bbs_rack(frames)
 {
     $fn=20;
     height = (frames+1)*20 + 15;
+    if (height > arbitrary_printer_limit)
+    {
+        echo("Warning: object height of ", height, "might cause problems.");
+    }
     rail_offset = 3;
     difference()
     {
@@ -113,7 +120,7 @@ module bbs_rack(frames)
 
 union()
 {
-    bbs_rack(2);
-//    translate([1, 5, 5 + 3]) color("red") bbs_tray();
+    bbs_rack(0);
+    translate([2, 5, 5 + 3]) color("red") bbs_tray();
 //    translate([length + 2, 0, 18])rotate([0, 270, 0]) color("blue") bbs_panel(2);
 }

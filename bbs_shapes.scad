@@ -62,8 +62,8 @@ module bbs_spacer(od, id, height)
 {
     difference()
     {
-        cylinder(r=od/2, h=height);
-        translate([0, 0, -0.1]) cylinder(r=id/2, h=height + 0.2);
+        cylinder(r=od/2, h=height, $fn=20);
+        translate([0, 0, -0.1]) cylinder(r=id/2, h=height + 0.2, $fn=20);
     }
 }
 //
@@ -72,4 +72,5 @@ module bbs_spacer(od, id, height)
 //bbs_prism1(3, 5);
 //translate([0, 7, 0]) bbs_prism2(3, 5);
 //translate([7, 0, 0]) bbs_fillet(3, 5);
-bbs_spacer(23, 10, 16);
+//bbs_spacer(23, 10, 16);
+bbs_spacer(6, 4, 2);

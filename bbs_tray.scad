@@ -3,7 +3,7 @@
 // hold different electronic devices.
 //
 use <bbs_shapes.scad>
-length=200;
+length=198;
 width=160;
 //module prism(l)
 //{

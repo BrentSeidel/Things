@@ -14,22 +14,30 @@ I expect to be adding more items as time passes.
 The measurements for these items are based on data that I have.  Either measurements that I’ve made or found somewhere.  Even if the measurements are absolutely correct, due to variations in 3D printers, you may need to make minor adjustments for things to work on your 3D printer.
 
 ## Contents
-### Rack
+### rack
 This is the basic rack.  it is a parametrized OpenSCAD module.  The parameter controls the height of the rack.
 
-### Tray
+### tray
 This is the generic tray.  It will need to be customized for your application.
 
-### Panel
+### panel
 This is a generic panel.  The hight of the panel is a parameter.  It will need to be customized for your application, or you can just use it as a blank panel.
 
-### Connectors
+### arduino
+This file is a collector for all Arduino models.  Currently, it contains an Arduino Mega 2560 which will probably work for the Due and the Mega.
+
+### boards
+This file contains models for miscellaneous boards.
+
+### connectors
 This currently contains a module to generate cutouts for D-Sub connectors.  Connector sizes 1-6 are supported.  I have tested sizes 1 (9-pin) and 3 (25-pin) with connectors that I have and they seem to work.  Some size adjustments were made.
 
 Additional types of connectors may be added.
 
 ### half\_breadboad
 This is a block representing a half-sized breadboard.  It is most useful for doing fit checking.  This may be expanded to have a more detailed model and more breadboard sizes.
+
+This will probably be expanded to contain other breadboards.
 
 ### lcd\_20x4
 This is a module for a 20 character by 4 line LCD.  This is modeled on AdaFruit part number 198.  Included are a model for the LCD module and cutouts for panel mounting the module.
@@ -43,8 +51,8 @@ This is a couple of modules for cutouts for LEDs and plastic springs to hold the
 ### pins
 Contains a module for generating header pins.
 
-### RaspberryPi3
-This is module for a model of the Raspberry Pi 3.  It’s not finished, but works OK for basic interference checks.  Also included is a module to generate the standoffs and mounting holes.
+### RaspberryPi
+This file contains modules for all Raspberry Pi models.  Currently, it contains a model of the Raspberry Pi 3.  It’s not finished, but works OK for basic interference checks.  Also included is a module to generate the standoffs and mounting holes.  It will probably also work for a Raspberry Pi 2.
 
 ### rj45
 Currently incomplete.  This will eventually be a module for a clip in RJ45 connector and a module for a mount for it to clip into.

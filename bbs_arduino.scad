@@ -20,7 +20,10 @@ module bbs_arduino_mega2560()
         translate([0, 0, -0.1]) bbs_arduino_mega2560_standoffs(2, hole_rad, 20);
     }
 }
-
+//
+// The standoff pattern also works for the Arduino Due and will probably work for the Mega
+// as well.
+//
 module bbs_arduino_mega2560_standoffs(height, radius, facets)
 {
     hole_rad = 3.15/2;

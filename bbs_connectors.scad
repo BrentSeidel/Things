@@ -1,6 +1,8 @@
 //
 // This is a collection of connector cutouts for panels.
 //
+
+//--------------------------------------------------------------------------------------
 // Dimensions for D-Sub connectors from http://www.interfacebus.com/Connector_D-Sub_Mechanical_Dimensions.html
 // Since the cutouts are intended for either gender connector and since 3-D printer holes tend to be a little
 // smaller than specified, the maximum tolerance sizes are used.  These may be tweaked if they turn out to
@@ -66,4 +68,33 @@ module bbs_d_cutout(size, height)
     }
 }
 
+//--------------------------------------------------------------------------------------
+//  These are like bannana connectors, but are a smaller diameter.  I have a bag of them
+// from some unknown source.  I did find them at Digi-Key - search for tip connectors.
+// As with most things at Digi-Key, there is a bewildering variaty of them and you will
+// need to narrow down just what you need.  These are also cheaper than bannana connectors,
+// which is probably why I have a bag of them.
+//
+module bbs_tip_connector()
+{
+    union()
+    {
+        cylinder(r=9.41/2, h=4.8);
+        translate([0, 0, -14.19]) cylinder(r=6.22/2, h=14.19);
+        translate([0, 0, -21.83]) cylinder(r=2.35/2, h=21.83);
+    }
+}
+
+module bbs_tip_connector_cutout(height)
+{
+    intersection()
+    {
+        cylinder(r=6.32/2, h=height, $fn=20);
+        translate([-6.32/2, -5.4/2, 0]) cube([6.32, 5.4, height]);
+    }
+}
+
+//--------------------------------------------------------------------------------------
 bbs_d_cutout(1, 2);
+translate([0, 15, 0]) bbs_tip_connector_cutout(2);
+translate([10, 15, 0]) bbs_tip_connector();

@@ -115,7 +115,42 @@ module bbs_bme280()
     }
 }
 
+//--------------------------------------------------------------------------------------
+// Model for character LCD backpack
+// AdaFruit item #292
+//
+// This board is actually designed to mount on the back of a character LCD using the header
+// strip.  This board has only one mounting hole, which unfortunately doesn't line up with
+// the mounting hole on the 20x4 character LCD panel that I have.
+//
 
+module bbs_LCD_backpack_standoffs(height, radius, facets)
+{
+    hole_radius = 2.75/2;
+    translate([1.345+hole_radius, 1.32+hole_radius, 0]) cylinder($fn=facets, h=height, r=radius);
+}
+
+module bbs_LCD_backpack()
+{
+    hole_radius = 2.15/2;
+    width = 22.23;
+    length = 50.29;
+    difference()
+  { 
+        union()
+        {
+            cube([length, width, 2]);
+            translate([7.96, 1.94, 0])  bbs_header(16);
+            translate([0.53, 14.05, 2]) cube([18.08, 6.98, 9.03]);
+        }
+        translate([0, 0, -1]) bbs_LCD_backpack_standoffs(4, hole_radius, 12);
+    }
+}
+
+
+//--------------------------------------------------------------------------------------
 color("red") bbs_pwm16();
-color("green") translate([0, 40, 0]) bbs_ra8875();
-color("blue") translate([70, 0, 0]) bbs_bme280();
+color("red") translate([0, 40, 0]) bbs_ra8875();
+color("red") translate([70, 0, 0]) bbs_bme280();
+color("green") translate([70, 40, 0]) bbs_LCD_backpack();
+

@@ -1,4 +1,4 @@
-//
+//-------------------------------------------------------------------------------------
 // Model for a SPDT switch from AdaFruit (Product ID 3221)
 //
 // The switch module can be used for checking for interferance.
@@ -35,5 +35,37 @@ module bbs_spdt_switch_cutout(height)
     }
 }
 
-//bbs_spdt_switch();
-bbs_spdt_switch_cutout(2);
+//-------------------------------------------------------------------------------------
+// Model for an 8-way rotary switch AdaFruit (Product ID 2925)
+// Connectors are not included in the model, but extend 4.32mm from the base.
+//
+module bbs_sp8t_switch()
+{
+    union()
+    {
+        cylinder(r=8.82/2, h=7.34);
+        cylinder(r=5.85/2, h=15.53);
+        translate([0, 0, -9.26]) cylinder(r=15.94/2, h=9.26);
+        translate([15.94/2 - 1.05, -1, 0]) cube([1.05, 2, 1.8]);
+    }
+}
+//
+// The cutout is a little unusual as it also includes a cutout for a tab
+// to keep the switch from rotating.  It's size will probably need to be
+// adjusted so that it will fit.  Also, logic could be added to limit
+// its height to that of the actual tab, about 1.8mm.
+//
+module bbs_sp8t_switch_cutout(height)
+{
+    union()
+    {
+        cylinder(r=9.02/2, h=height);
+        translate([15.94/2 - 1.05, -1, 0]) cube([1.05, 2, height]);
+    }
+}
+
+bbs_spdt_switch();
+translate([0, 20, 0]) bbs_sp8t_switch();
+
+translate([15, 0, 0]) bbs_spdt_switch_cutout(2);
+translate([15, 20, 0]) bbs_sp8t_switch_cutout(2);

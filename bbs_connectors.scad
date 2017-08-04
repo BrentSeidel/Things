@@ -95,6 +95,52 @@ module bbs_tip_connector_cutout(height)
 }
 
 //--------------------------------------------------------------------------------------
+// Models and cutouts for Bannana jacks.  These are ubiquitous in lab equipment.
+//
+module bbs_bannana_connector()
+{
+    union()
+    {
+        cylinder(r=11.15/2, h=4.7);
+        translate([0, 0, -11.91]) cylinder(r=7.78/2, h=11.91);
+        translate([0, 0, -19.16]) cylinder(r=4.73/2, h=19.16);
+    }
+}
+
+module bbs_bannana_connector_cutout(height)
+{
+    radius=8.07/2;
+    width=6.3;
+    intersection()
+    {
+        cylinder(r=radius, h=height, $fn=20);
+        translate([-radius, -width/2, 0]) cube([radius*2, width, height]);
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// This is a cutout for a panel mounted Rj45 connector - AdaFruit part number 909
+//
+
+module bbs_rj45_panel_cutout(height)
+{
+    radius = 3.4/2;
+    width = 15.66;
+    offset = 2.76 + radius + width/2;
+    tall = 14.00;
+    union()
+    {
+        translate([-offset, 0, 0]) cylinder(r=radius, h = height, $fn=20);
+        translate([offset, 0, 0]) cylinder(r=radius, h = height, $fn=20);
+        translate([-width/2, -tall/2, 0]) cube([width, tall, height]);
+    }
+}
+
+//--------------------------------------------------------------------------------------
 bbs_d_cutout(1, 2);
 translate([0, 15, 0]) bbs_tip_connector_cutout(2);
 translate([10, 15, 0]) bbs_tip_connector();
+translate([0, 30, 0]) bbs_bannana_connector_cutout(2);
+translate([10, 30, 0]) bbs_bannana_connector();
+translate([0, 45, 0]) bbs_rj45_panel_cutout(2);
+

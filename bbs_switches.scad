@@ -64,8 +64,36 @@ module bbs_sp8t_switch_cutout(height)
     }
 }
 
+//-------------------------------------------------------------------------------------
+// Model for 16mm push button switch AdaFruit (Product ID 1442) and probably all other 16mm
+// switches.
+// Connectors are not included in the model, but extend 5.56mm from the base.
+//
+module bbs_16mm_switch()
+{
+    translate([0, 0, -18.45]) cylinder(r=8, h=18.45);
+    translate([-9, -9, 0]) cube([18, 18, 2.18]);
+    cylinder(r=7.5, h=5.79);
+}
+
+module bbs_16mm_switch_cutout(height)
+{
+//    cylinder(r=8.1, h=height, $fn=20);
+    radius=8.2;
+    width=15.2;
+    intersection()
+    {
+        cylinder(r=radius, h=height, $fn=20);
+        translate([-radius, -width/2, 0]) cube([radius*2, width, height]);
+    }
+}
+
+//-------------------------------------------------------------------------------------
 bbs_spdt_switch();
 translate([0, 20, 0]) bbs_sp8t_switch();
 
 translate([15, 0, 0]) bbs_spdt_switch_cutout(2);
 translate([15, 20, 0]) bbs_sp8t_switch_cutout(2);
+
+translate([45, 0, 0]) bbs_16mm_switch(2);
+translate([45, 20, 0]) bbs_16mm_switch_cutout(2);

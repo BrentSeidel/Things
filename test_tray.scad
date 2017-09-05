@@ -4,7 +4,7 @@
 // A Raspberry Pi 3 is mounted on the carrier and then the carrier slides into
 // a frame.
 //
-use <bbs_RaspberryPi3.scad>
+use <bbs_RaspberryPi.scad>
 use <bbs_arduino.scad>
 //use <bbs_half_breadboard.scad>
 use <bbs_tray.scad>

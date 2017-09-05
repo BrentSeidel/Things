@@ -50,7 +50,7 @@ module bbs_d_cutout(size, height)
     h_sizes = [19.53, 27.76, 41.53, 57.96, 55.59, 58.72];
     j_sizes = [10.97, 10.97, 10.97, 10.97, 13.82, 15.39];
     size_c = c_sizes[size - 1];
-    size_h = h_sizes[size - 1] + 1.0;
+    size_h = h_sizes[size - 1] + 1.5;
     size_j = j_sizes[size - 1] + 1.0;
     union()
     {

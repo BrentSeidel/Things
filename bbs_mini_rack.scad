@@ -2,7 +2,7 @@
 // Extendable rack for trays
 //
 
-use <bbs_standard_rack_size.scad>
+use <bbs_mini_rack_size.scad>
 use <bbs_shapes.scad>
 
 screw1 = 4.4/2;
@@ -33,14 +33,14 @@ module bbs_rack(frames)
             //
             // Frame
             //
-            cube([5, 170, 5]);
+            cube([5, bbs_rack_width()+9, 5]);
             cube([bbs_rack_length(), 5, rail_offset+12]);
             cube([15, 4, height]);
             translate([0, bbs_rack_width()+5, 0]) cube([bbs_rack_length(), 5, rail_offset+12]);
             translate([0, bbs_rack_width()+6, 0]) cube([15, 4, height]);
             translate([bbs_rack_length()-5, 0, 0]) cube([5, bbs_rack_width()+10, 3.5]);
             translate([bbs_rack_length()-15, 0, 0]) cube([15, 4, height]);
-            translate([bbs_rack_length()-15, bbs_rack_width() + 5, 0]) cube([15, 4, height]);
+            translate([bbs_rack_length()-15, bbs_rack_width()+5, 0]) cube([15, 4, height]);
             translate([0, 0, height+5]) rotate([0, 90, 0]) bbs_prism2(10, bbs_rack_length());
             translate([0, bbs_rack_width()+10, height+5]) rotate([270, 0, 0]) rotate([0, 90, 0]) 
                     bbs_prism2(10, bbs_rack_length());
@@ -129,7 +129,7 @@ module bbs_rack(frames)
 
 union()
 {
-    bbs_rack(4);
+    bbs_rack(3);
 //    translate([2, 5, 5 + 3]) color("red") bbs_tray();
 //    translate([bbs_rack_length() + 2, 0, 18])rotate([0, 270, 0]) color("blue") bbs_panel(2);
 }

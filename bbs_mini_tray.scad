@@ -5,8 +5,10 @@
 // One may wish to omit the knobs if, for example, one wants a panel to
 // cover the tray.
 //
-use <bbs_standard_rack_size.scad>
+use <bbs_mini_rack_size.scad>
 use <bbs_shapes.scad>
+use <bbs_breadboard.scad>
+
 length = bbs_rack_length()-2;
 width = bbs_rack_width()-1;
 
@@ -37,3 +39,4 @@ module bbs_tray(knobs=true)
 }
 
 bbs_tray(false);
+//translate([10, 10, 7]) color("red") bbs_half_permaprotoboard();

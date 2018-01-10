@@ -2,3 +2,5 @@
 *.stl
 
 *.gcode
+
+test_coupon.scad

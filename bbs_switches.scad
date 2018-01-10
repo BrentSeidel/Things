@@ -4,7 +4,8 @@
 // The switch module can be used for checking for interferance.
 // The cutout module is to be used for making a hole for mounting the switch in a panel.
 //
-
+// This file will grow to include other switches, pots, and similar user interface items.
+//
 module bbs_spdt_switch()
 {
     translate([-13/2, -7.88/2, -9.56]) difference()
@@ -89,11 +90,30 @@ module bbs_16mm_switch_cutout(height)
 }
 
 //-------------------------------------------------------------------------------------
+// Model for a 10k potentiometer.  It will probably work for other pots as well.
+//
+module bbs_10k_pot()
+{
+    cylinder(r=6.7/2, h=15.35);
+    translate([0, 0, -9.06]) cylinder(r=16.42/2, h=9.06);
+    translate([4.1+6.7/2, -2.46/2, 0]) cube([1.24, 2.46, 2.31]);
+}
+
+module bbs_10k_pot_cutout(height)
+{
+    cylinder(r=6.7/2 + 0.2, h=height);
+    translate([4.1-0.1+6.7/2, -2.46/2-0.1, 0]) cube([1.24+0.2, 2.46+0.2, height]);
+}
+
+//-------------------------------------------------------------------------------------
 bbs_spdt_switch();
 translate([0, 20, 0]) bbs_sp8t_switch();
 
 translate([15, 0, 0]) bbs_spdt_switch_cutout(2);
 translate([15, 20, 0]) bbs_sp8t_switch_cutout(2);
 
-translate([45, 0, 0]) bbs_16mm_switch(2);
-translate([45, 20, 0]) bbs_16mm_switch_cutout(2);
+translate([30, 0, 0]) bbs_16mm_switch(2);
+translate([30, 20, 0]) bbs_16mm_switch_cutout(2);
+
+translate([60, 0, 0]) bbs_10k_pot();
+translate([60, 20, 0]) bbs_10k_pot_cutout(2);

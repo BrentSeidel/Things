@@ -83,7 +83,6 @@ module bbs_pwm16()
     }
 }
 
-
 //--------------------------------------------------------------------------------------
 // Model for BME280 Temperature, pressure, humidity sensor
 // AdaFruit item #2652
@@ -112,6 +111,37 @@ module bbs_bme280()
             translate([0.94, 2.47, 0])  bbs_header(7);
         }
         translate([0, 0, -1]) bbs_bme280_standoffs(4, hole_radius, 12);
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Model for VL53L0X Distance Sensor
+// AdaFruit item #3317
+//
+
+module bbs_vl53l0x_standoffs(height, radius, facets)
+{
+    hole_radius = 2.15/2;
+    union()
+    {
+      translate([1.37+hole_radius, 14.01+hole_radius, 0]) cylinder($fn=facets, h=height, r=radius);
+      translate([16.57+hole_radius, 14.07+hole_radius, 0]) cylinder($fn=facets, h=height, r=radius);
+    }
+}
+
+module bbs_vl53l0x()
+{
+    hole_radius = 2.15/2;
+    width = 17.78;
+    length = 20.58;
+    difference()
+  { 
+        union()
+        {
+            cube([length, width, 2], center=false);
+            translate([1.93, 2.47, 0])  bbs_header(7);
+        }
+        translate([0, 0, -1]) bbs_vl53l0x_standoffs(4, hole_radius, 12);
     }
 }
 
@@ -152,5 +182,6 @@ module bbs_LCD_backpack()
 color("red") bbs_pwm16();
 color("red") translate([0, 40, 0]) bbs_ra8875();
 color("red") translate([70, 0, 0]) bbs_bme280();
-color("green") translate([70, 40, 0]) bbs_LCD_backpack();
+color("red") translate([70, 40, 0]) bbs_LCD_backpack();
+color("green") translate([90, 0, 0]) bbs_vl53l0x();
 

@@ -5,7 +5,7 @@
 // measured in frames, which is the number of screw holes spaced 20mm apart.
 //
 
-use <bbs_standard_rack_size.scad>
+use <bbs_mini_rack_size.scad>
 use <bbs_shapes.scad>
 use <bbs_rack.scad>
 

@@ -36,5 +36,79 @@ module bbs_full_breadboard_standoffs(height, radius, facets)
     }
 }
 
+//--------------------------------------------------------------------------------------
+// Full size perma-proto board with screw mounting.
+//
+module bbs_full_permaprotoboard()
+{
+    hole_rad = 3.2/2;
+    difference()
+    {
+        cube([157.67, 50.88, 2], center=false);
+        translate([0, 0, -0.1]) bbs_full_permaprotoboard_standoffs(2.2, hole_rad, 12);
+    }
+}
 
-bbs_full_breadboard();
+
+module bbs_full_permaprotoboard_standoffs(height, radius, facets)
+{
+    hole_rad = 3.2/2;
+    union()
+    {
+        translate([2.4 + hole_rad, 23.95 + hole_rad, 0]) cylinder(r=radius, h = height, $fn=facets);
+        translate([77.16 + hole_rad, 23.95 + hole_rad, 0]) cylinder(r=radius, h = height, $fn=facets);
+        translate([152.07 + hole_rad, 23.95 + hole_rad, 0]) cylinder(r=radius, h = height, $fn=facets);
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Half size perma-proto board with screw mounting.
+//
+module bbs_half_permaprotoboard()
+{
+    hole_rad = 3.2/2;
+    difference()
+    {
+        cube([81.34, 50.88, 2], center=false);
+        translate([0, 0, -0.1]) bbs_half_permaprotoboard_standoffs(2.2, hole_rad, 12);
+    }
+}
+
+
+module bbs_half_permaprotoboard_standoffs(height, radius, facets)
+{
+    hole_rad = 3.2/2;
+    union()
+    {
+        translate([2.3 + hole_rad, 23.95 + hole_rad, 0]) cylinder(r=radius, h = height, $fn=facets);
+        translate([75.91 + hole_rad, 23.95 + hole_rad, 0]) cylinder(r=radius, h = height, $fn=facets);
+    }
+}
+
+//--------------------------------------------------------------------------------------
+// Quarter size perma-proto board with screw mounting.
+//
+module bbs_quarter_permaprotoboard()
+{
+    hole_rad = 3.2/2;
+    difference()
+    {
+        cube([43.27, 50.88, 2], center=false);
+        translate([0, 0, -0.1]) bbs_quarter_permaprotoboard_standoffs(2.2, hole_rad, 12);
+    }
+}
+
+
+module bbs_quarter_permaprotoboard_standoffs(height, radius, facets)
+{
+    hole_rad = 3.2/2;
+    union()
+    {
+        translate([2.3 + hole_rad, 23.95 + hole_rad, 0]) cylinder(r=radius, h = height, $fn=facets);
+        translate([37.87 + hole_rad, 23.95 + hole_rad, 0]) cylinder(r=radius, h = height, $fn=facets);
+    }
+}
+
+bbs_quarter_permaprotoboard();
+translate([0, 60, 0]) bbs_half_permaprotoboard();
+translate([0, 120, 0]) bbs_full_permaprotoboard();

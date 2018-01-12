@@ -5,10 +5,14 @@
 // One may wish to omit the knobs if, for example, one wants a panel to
 // cover the tray.
 //
-use <bbs_standard_rack_size.scad>
+use <bbs_constants.scad>
 use <bbs_shapes.scad>
-length = bbs_rack_length()-2;
-width = bbs_rack_width()-1;
+//
+// Set rack_width and rack_length to appropriate sizes for rack.  Currently functions for standard (std)
+// and mini sizes are available, or you can pick your own size.
+//
+rack_width = bbs_std_rack_width() - 1;
+rack_length = bbs_std_rack_length() - 2;
 
 module bbs_tray(knobs=true)
 {
@@ -16,18 +20,19 @@ module bbs_tray(knobs=true)
     {
         union()
         {
-            cube([length, width, 3], center=false); // Base
-            translate([0, 0, 6])rotate([0, 90, 0]) rotate([0, 0, -90]) bbs_prism1(5, length); // Rail
-            translate([0, width, 1])rotate([0, 90, 0]) rotate([0, 0, 90]) bbs_prism1(5, length); // Rail
-            translate([0, 0, 0]) cube([length, 8, 7], center=false); // Side
-            translate([0, width - 8, 0]) cube([length, 8, 7], center=false); // Side
+            cube([rack_length, rack_width, 3], center=false); // Base
+            translate([0, 0, 6]) rotate([0, 90, 0]) rotate([0, 0, -90]) bbs_prism1(5, rack_length); // Rail
+            translate([0, rack_width, 1]) rotate([0, 90, 0]) rotate([0, 0, 90])
+                    bbs_prism1(5, rack_length); // Rail
+            translate([0, 0, 0]) cube([rack_length, 8, 7], center=false); // Side
+            translate([0, rack_width - 8, 0]) cube([rack_length, 8, 7], center=false); // Side
 //
             if (knobs)
             {
-                translate([length, 3, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
-                translate([length + 5, 0, 0]) cube([5, 8, 8], center=false); // Knob
-                translate([length, width - 4, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
-                translate([length + 5, width - 8, 0]) cube([5, 8, 8], center=false); // Knob
+                translate([rack_length, 3, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
+                translate([rack_length + 5, 0, 0]) cube([5, 8, 8], center=false); // Knob
+                translate([rack_length, rack_width - 4, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
+                translate([rack_length + 5, rack_width - 8, 0]) cube([5, 8, 8], center=false); // Knob
             }
         }
         union()

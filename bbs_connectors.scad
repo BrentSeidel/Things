@@ -117,6 +117,10 @@ module bbs_bannana_connector_cutout(height)
         translate([-radius, -width/2, 0]) cube([radius*2, width, height]);
     }
 }
+//
+// Standard spacing between bannana connectors.
+//
+function bbs_bannana_connector_spacing() = 19.05;
 
 //--------------------------------------------------------------------------------------
 // This is a cutout for a panel mounted Rj45 connector - AdaFruit part number 909

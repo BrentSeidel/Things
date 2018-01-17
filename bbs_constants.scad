@@ -17,7 +17,7 @@ function bbs_std_rack_length() = 200;
 // determined.  This is necessary since the printer makes holes a little smaller than they should be
 // and to provide a little clearance.
 //
-function screw_2_size() = 2.10 + 0.1;
-function screw_4_size() = 2.80 + 0.1;
-function screw_6_size() = 3.38 + 0.1;
-function screw_8_size() = 4.06 + 0.1;
+function screw_2_size() = 2.10 + 0.25;
+function screw_4_size() = 2.80 + 0.15;
+function screw_6_size() = 3.38 + 0.3;
+function screw_8_size() = 4.06 + 0.3;

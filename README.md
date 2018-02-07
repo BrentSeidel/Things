@@ -34,6 +34,9 @@ This currently contains a module to generate cutouts for D-Sub connectors.  Conn
 
 Additional types of connectors may be added.
 
+### constants
+This contains a number of functions that return common values.  Examples are standard sizes for screw/bolt holes.
+
 ### half\_breadboad
 This is a block representing a half-sized breadboard.  It is most useful for doing fit checking.  This may be expanded to have a more detailed model and more breadboard sizes.
 
@@ -61,7 +64,7 @@ Currently incomplete.  This will eventually be a module for a clip in RJ45 conne
 This is a collection of modules for miscellaneous shapes used in other modules.
 
 ### switches
-This contains modules for switches and panel cutouts for the switches.  Currently only a SPDT switch from AdaFruit is supported.  More switches will likely be added.
+This contains modules for switches and panel cutouts for the switches.  More switches will likely be added.
 
-### test\_panel
-These are some test panels that I’ve printed to test panel cutouts.  You can use them as a starting point for your own panel designs.
+### t\_extrusion
+This contains models for things to work with aluminum t-slotted extrusions.  Mounting holes are based on a 20mm X 20mm grid.

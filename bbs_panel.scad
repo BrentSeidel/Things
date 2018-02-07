@@ -7,18 +7,24 @@
 use <bbs_constants.scad>
 use <bbs_shapes.scad>
 //
-// Set rack_width and rack_length to appropriate sizes for rack.  Currently functions for standard (std)
-// and mini sizes are available, or you can pick your own size.
+// The module is provided in two versions.  In the _raw version, the length and width can be set to any
+// size in units of 1mm.  In the non-_raw version, the length and width are set in units of frames (same
+// as the height).  This is basically 20mm units with a little bit of processing.  Note that since the
+// values are actually floating point, you can select any value, but don't do that.
 //
-rack_width = bbs_std_rack_width();
-//rack_length = bbs_std_rack_length();
+//rack_width = bbs_std_rack_width();
 
-module bbs_panel(frames)
+module bbs_panel(frames_wide, frames_high)
+{
+    bbs_panel_raw(frames_wide*20 + 10, frames_high);
+}
+//
+module bbs_panel_raw(rack_width, frames)
 {
     $fn = 20;
     length = frames *20;
     height = 2;
-    screw = 4.1/2;
+    screw = screw_8_size()/2;
     difference()
     {
         cube([length, rack_width+10, height]);
@@ -33,4 +39,4 @@ module bbs_panel(frames)
     }
 }
 
-bbs_panel(2);
+bbs_panel(2, 2);

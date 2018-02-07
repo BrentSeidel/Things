@@ -2,28 +2,32 @@
 // Extendable rack for trays
 //
 use <bbs_constants.scad>
-//use <bbs_standard_rack_size.scad>
 use <bbs_shapes.scad>
 
-screw1 = 4.4/2;
-screw2 = 4.1/2;
-screw3 = 4.5/2;
+screw_rad = 4.5/2;
 //
 // Set this to be a reasonable height limit for your printer
 //
 arbitrary_printer_limit = 150;
 //
+// The module is provided in two versions.  In the _raw version, the length and width can be set to any
+// size in units of 1mm.  In the non-_raw version, the length and width are set in units of frames (same
+// as the height).  This is basically 20mm units with a little bit of processing.  Note that since the
+// values are actually floating point, you can select any value, but don't do that.
+//
 // Set rack_width and rack_length to appropriate sizes for rack.  Currently functions for standard (std)
 // and mini sizes are available, or you can pick your own size.
-//
-rack_width = bbs_std_rack_width();
-rack_length = bbs_std_rack_length();
 //
 // The parameter "frames" sets the height of the rack in number of screw holes.  The base rack with no
 // screw holes is actually one frame tall.  Setting this parameter to less than 1 will probably not
 // provide satisfactory results.
 //
-module bbs_rack(frames)
+module bbs_rack(frames_wide, frames_long, frames_high)
+{
+    bbs_rack_raw(frames_wide*20 + 10, (frames_long + 1)*20, frames_high);
+}
+//
+module bbs_rack_raw(rack_width, rack_length, frames)
 {
     $fn=20;
     height = frames*20 + 15;
@@ -39,7 +43,7 @@ module bbs_rack(frames)
             //
             // Frame
             //
-            cube([5, 170, 5]);
+            cube([5, rack_width + 5, 5]);
             cube([rack_length, 5, rail_offset+12]);
             cube([15, 4, height]);
             translate([0, rack_width+5, 0]) cube([rack_length, 5, rail_offset+12]);
@@ -96,20 +100,20 @@ module bbs_rack(frames)
             //
             for(a = [20 + rail_offset:20:height])
             {
-                translate([10, -1, a]) rotate([-90, 0, 0]) cylinder(r=screw1, h=rack_width+20);
+                translate([10, -1, a]) rotate([-90, 0, 0]) cylinder(r=screw_rad, h=rack_width+20);
                 translate([rack_length -10, -1, a]) rotate([-90, 0, 0])
-                        cylinder(r=screw1, h=rack_width+20);
-                translate([-1, 10, a]) rotate([0, 90, 0]) cylinder(r=screw2, h=rack_length+10);
+                        cylinder(r=screw_rad, h=rack_width+20);
+                translate([-1, 10, a]) rotate([0, 90, 0]) cylinder(r=screw_rad, h=rack_length+10);
                 translate([-1, rack_width, a]) rotate([0, 90, 0])
-                        cylinder(r=screw2, h=rack_length+10);
+                        cylinder(r=screw_rad, h=rack_length+10);
             }
             //
             // Mounting screw holes - vertical
             //
             for(a = [20:20:rack_length-10])
             {
-                translate([a, 10, -1]) cylinder(r=screw3, h=height + 10);
-                translate([a, rack_width , -1]) cylinder(r=screw3, h=height + 10);
+                translate([a, 10, -1]) cylinder(r=screw_rad, h=height + 10);
+                translate([a, rack_width, -1]) cylinder(r=screw_rad, h=height + 10);
             }
             //
             // Side vents
@@ -135,7 +139,7 @@ module bbs_rack(frames)
 
 union()
 {
-    bbs_rack(4);
+    bbs_rack(2, 2, 2);
 //    translate([2, 5, 5 + 3]) color("red") bbs_tray();
 //    translate([rack_length + 2, 0, 18])rotate([0, 270, 0]) color("blue") bbs_panel(2);
 }

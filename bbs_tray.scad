@@ -8,13 +8,28 @@
 use <bbs_constants.scad>
 use <bbs_shapes.scad>
 //
+// The module is provided in two versions.  In the _raw version, the length and width can be set to any
+// size in units of 1mm.  In the non-_raw version, the length and width are set in units of frames (same
+// as the height).  This is basically 20mm units with a little bit of processing.  Note that since the
+// values are actually floating point, you can select any value, but don't do that.
+//
+//
 // Set rack_width and rack_length to appropriate sizes for rack.  Currently functions for standard (std)
 // and mini sizes are available, or you can pick your own size.
 //
-rack_width = bbs_std_rack_width() - 1;
-rack_length = bbs_std_rack_length() - 2;
-
-module bbs_tray(knobs=true)
+//rack_width = bbs_std_rack_width() - 1;
+//rack_length = bbs_std_rack_length() - 2;
+//
+// The parameter "frames" sets the height of the rack in number of screw holes.  The base rack with no
+// screw holes is actually one frame tall.  Setting this parameter to less than 1 will probably not
+// provide satisfactory results.
+//
+module bbs_tray(frames_wide, frames_long, frames_high)
+{
+    bbs_tray_raw(frames_wide*20 + 9, (frames_long + 1)*20 - 2, frames_high);
+}
+//
+module bbs_tray_raw(rack_width, rack_length, knobs=true)
 {
     difference()
     {
@@ -41,4 +56,4 @@ module bbs_tray(knobs=true)
     }
 }
 
-bbs_tray(false);
+bbs_tray(2, 2, false);

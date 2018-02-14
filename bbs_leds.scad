@@ -52,7 +52,23 @@ module extrusion_led()
         }
     }
 }
-
+//
+// A hood to shield a LED or light detector
+//
+module bbs_extrusion_led_hood(len, thickness)
+{
+    height = len;
+    difference()
+    {
+        cylinder(h=height, r=thickness + 5.8/2);
+        union()
+        {
+            translate([0, 0, -0.1]) rotate([0, 0, 18]) cylinder(h=height*2, r=5.8/2, $fn=10);
+            translate([0, 0, height-3]) rotate([90, 0, 0]) cylinder(r=3, h=25, $fn=6);
+            translate([-3, -(thickness+5.8), height-3]) cube([6, thickness+5.8, 6]);
+        }
+    }
+}
 //
 // Mount for an CdS photosensor to attach to an aluminum extrusion.  This inserts into a mount defined in 
 // the bbs_t_extrusion file.
@@ -78,6 +94,8 @@ module extrusion_CdS()
     }
 }
 
-rotate([0, -90, 0]) extrusion_led();
+//rotate([0, -90, 0]) extrusion_led();
+//translate([0, 10, 0])
+bbs_extrusion_led_hood(25, 2);
 //bbs_led_mount(5, 2);
 //translate([0, 0, -1]) color("red") bbs_led_cutout(5, 2);

@@ -63,10 +63,27 @@ module extrusion_plate(length, width)
     }
 }
 //
+// Clips to hold items to a screw plate.
+//
+module extrusion_clip(height)
+{
+    union()
+    {
+        difference()
+        {
+            cube([20, 20, 4]);
+            translate([10, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+        }
+        translate([20, 0, 0]) cube([4, 20, height + 4]);
+        translate([24, 0, height]) cube([20, 20, 4]);
+    }
+}
+//
 // A base for mounting items.
 //
 module LOCAL_mount()
 {
+    screw_space = 7;
     difference()
     {
         union()
@@ -78,8 +95,10 @@ module LOCAL_mount()
         {
             translate([0, 10, 7]) rotate([0, 0, 30]) cylinder(r=3.1, h=30, $fn=6);
             translate([-0.5, -0.1, 7]) cube([1, 20.2, 30]);
-            translate([-3, 3, 25]) rotate([0, 90, 0]) cylinder(r=screw_4_size()/2, h=6, $fn=20);
-            translate([-3, 17, 25]) rotate([0, 90, 0]) cylinder(r=screw_4_size()/2, h=6, $fn=20);
+            translate([-3, 10 - screw_space, 25])
+                rotate([0, 90, 0]) cylinder(r=screw_4_size()/2, h=6, $fn=20);
+            translate([-3, 10 + screw_space, 25]) rotate([0, 90, 0])
+                cylinder(r=screw_4_size()/2, h=6, $fn=20);
         }
     }
 }
@@ -90,7 +109,11 @@ module extrusion_mount_base()
     {
         difference()
         {
-            cube([60, 20, 4]);
+            minkowski()
+            {
+                translate([3, 3, 0]) cube([54, 14, 3]);
+                cylinder(r=3.1, h=1);
+            }
             union()
             {
                 translate([10, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
@@ -109,7 +132,11 @@ module extrusion_dual_mount_base()
     {
         difference()
         {
-            cube([60, 20, 4]);
+            minkowski()
+            {
+                translate([3, 3, 0]) cube([54, 14, 3]);
+                cylinder(r=3.1, h=1);
+            }
             union()
             {
                 translate([10, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
@@ -135,7 +162,12 @@ module extrusion_banana()
         union()
         {
             rotate([0, 0, 30]) cylinder(r=3, h=25, $fn=6);
-            translate([-small_r, -flange_dia/2, 25]) cube([small_r*2, flange_dia, flange_dia/2]);
+            translate([-small_r + 1, -flange_dia/2 + 1, 25])
+            minkowski()
+            {
+                cube([small_r*2 - 2, flange_dia, flange_dia/2]);
+                sphere(r=1);
+            }
         }
         union()
         {
@@ -147,8 +179,9 @@ module extrusion_banana()
     }
 }
 
-extrusion_banana();
-//extrusion_mount_base();
-//extrusion_dual_mount_base();
+//extrusion_clip(10);
+//rotate([0, 90, 0]) extrusion_banana();
+//translate([0, 20, 0]) extrusion_mount_base();
+extrusion_dual_mount_base();
 //extrusion_stand();
 //extrusion_plate(10, 10);

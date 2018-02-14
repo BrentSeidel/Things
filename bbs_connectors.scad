@@ -111,10 +111,19 @@ module bbs_bannana_connector_cutout(height)
 {
     radius=8.07/2;
     width=6.3;
-    intersection()
+//    intersection()
+//    {
+//        cylinder(r=radius, h=height, $fn=20);
+//        translate([-radius, -width/2, 0]) cube([radius*2, width, height]);
+//    }
+    difference()
     {
         cylinder(r=radius, h=height, $fn=20);
-        translate([-radius, -width/2, 0]) cube([radius*2, width, height]);
+        union()
+        {
+            translate([-radius, -radius, -0.1]) cube([radius*2, radius - (width/2), height+0.2]);
+            translate([-radius, (width/2), -0.1]) cube([radius*2, radius - (width/2), height+0.2]);
+        }
     }
 }
 //

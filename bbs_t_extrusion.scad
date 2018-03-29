@@ -2,21 +2,25 @@
 // This file contains a number of different items that can mechanically interface with t-slotted aluminum
 // extrusions.
 //
+use <bbs_breadboard.scad>
 use <bbs_constants.scad>
 use <bbs_connectors.scad>
 
 //
-// Aluminum extrusion stand
+// Type 1 stand for Aluminum extrusion
 //
-module extrusion_stand()
+module extrusion_stand_1(sides = true)
 {
     difference()
     {
         union()
         {
-            translate([0, 0, 0]) cube([20, 20, 4]);
-            translate([-4, 0, 0]) cube([4, 20, 24]);
-            translate([20, 0, 0]) cube([4, 20, 24]);
+            translate([-4, 0, 0]) cube([28, 20, 4]);
+            if (sides)
+            {
+                translate([-4, 0, 0]) cube([4, 20, 24]);
+                translate([20, 0, 0]) cube([4, 20, 24]);
+            }
             translate([-34, 0, -10]) cube([20, 20, 4]);
             translate([34, 0, -10]) cube([20, 20, 4]);
             translate([-14 ,0, -10]) rotate([0, -45, 0]) cube([20, 20, 4]);
@@ -27,7 +31,55 @@ module extrusion_stand()
             translate([10, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
             translate([-30, 10, -10.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
             translate([50, 10, -10.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
-            translate([-4.1, 10, 14]) rotate([0, 90, 0]) cylinder(r=screw_m4_size()/2, h=30, $fn=10);
+            if (sides)
+            {
+                translate([-4.1, 10, 14]) rotate([0, 90, 0]) cylinder(r=screw_m4_size()/2, h=30, $fn=10);
+            }
+        }
+    }
+}
+//
+// Type 2 stand
+//
+module extrusion_stand_2(sides = true, frames = 1)
+{
+    union()
+    {
+        for(y = [0:1:frames - 1])
+        {
+            translate([0, y*20, 0]) difference()
+            {
+                union()
+                {
+                    translate([0, 0, 0]) cube([20, 20, 4]);
+                    translate([-20, 0, -20]) cube([20, 20, 4]);
+                    translate([20, 0, -20]) cube([20, 20, 4]);
+                    if (sides)
+                    {
+                        translate([-4, 0, -20]) cube([4, 20, 24]);
+                        translate([20, 0, -20]) cube([4, 20, 24]);
+                        translate([-4, 0, 0]) cube([4, 20, 24]);
+                        translate([20, 0, 0]) cube([4, 20, 24]);
+                    }
+                    else
+                    {
+                        translate([0, 0, -20]) cube([4, 20, 24]);
+                        translate([16, 0, -20]) cube([4, 20, 24]);
+                    }
+                }
+                union()
+                {
+                    translate([10, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+                    translate([-10, 10, -20.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+                    translate([10, 10, -20.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+                    translate([30, 10, -20.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+                    if (sides)
+                    {
+                        translate([-4.1, 10, 14]) rotate([0, 90, 0])
+                            cylinder(r=screw_m4_size()/2, h=30, $fn=10);
+                    }
+                }
+            }
         }
     }
 }
@@ -103,6 +155,13 @@ module LOCAL_mount()
     }
 }
 //
+// A piece that fits in the mount.  This is used for making things that will fit in the mount.
+//
+module extrusion_mount_fitting(len)
+{
+    translate([0, 0, -len]) rotate([0, 0, 30]) cylinder(r=3, h=len, $fn=6);
+}
+//
 module extrusion_mount_base()
 {
     union()
@@ -149,11 +208,48 @@ module extrusion_dual_mount_base()
     }
 }
 //
+// Mount for holding a particular lens that I have.  Modify for your needs.  It has been
+// generalized and parameterized to work for other items that can be held
+//
+module extrusion_mount_lens(thickness, heigh, lift)
+{
+    tfinger = 6; // Thickness of finger
+    wfinger = 5; // width of finger
+    union()
+    {
+        difference()
+        {
+            minkowski()
+            {
+                translate([3, 3, 0]) cube([54, 14, 3]);
+                cylinder(r=3.1, h=1);
+            }
+            union()
+            {
+                translate([10, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+                translate([50, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+            }
+        }
+        translate([30, 0, 0]) difference()
+        {
+            union()
+            {
+                translate([-(thickness+tfinger)/2, 0, 0]) cube([thickness+tfinger, wfinger, heigh]);
+                translate([-(thickness+tfinger)/2, 20-wfinger, 0]) cube([thickness+tfinger, wfinger, 30]);
+            }
+            union()
+            {
+                translate([-thickness/2, -0.1, lift]) cube([thickness, 20.2, 30]);
+            }
+        }
+    }
+}
+//
 // Things that can attach to the mounting base.
 //
 //  Holder for a couple of banana jacks - used to connect to other items.
 //
-module extrusion_banana()
+module extrusion_banana(len)
 {
     flange_dia = 35;
     small_r = 3*sqrt(3)/2;
@@ -161,8 +257,8 @@ module extrusion_banana()
     {
         union()
         {
-            rotate([0, 0, 30]) cylinder(r=3, h=25, $fn=6);
-            translate([-small_r + 1, -flange_dia/2 + 1, 25])
+            extrusion_mount_fitting(len);
+            translate([-small_r + 1, -flange_dia/2 + 1, 0])
             minkowski()
             {
                 cube([small_r*2 - 2, flange_dia, flange_dia/2]);
@@ -171,17 +267,60 @@ module extrusion_banana()
         }
         union()
         {
-            translate([-2.7, bbs_bannana_connector_spacing()/2, 24.5+flange_dia/4])
+            translate([-2.7, bbs_bannana_connector_spacing()/2, flange_dia/4-0.5])
                 rotate([0, 90, 0]) bbs_bannana_connector_cutout(6);
-            translate([-2.7, -bbs_bannana_connector_spacing()/2, 24.5+flange_dia/4])
+            translate([-2.7, -bbs_bannana_connector_spacing()/2, flange_dia/4-0.5])
                 rotate([0, 90, 0]) bbs_bannana_connector_cutout(6);
         }
     }
 }
-
+//
+//  Holder for some circuitry.
+//
+module extrusion_circuit(len)
+{
+    flange_dia = 35;
+    small_r = 3*sqrt(3)/2;
+    difference()
+    {
+        union()
+        {
+            extrusion_mount_fitting(len);
+            translate([-small_r + 1, -flange_dia/2 + 1, 0])
+            minkowski()
+            {
+                cube([small_r*2 - 2, flange_dia, flange_dia]);
+                sphere(r=1);
+            }
+            translate([-small_r, -5, flange_dia]) cube([small_r*2, 10, 85]);
+            translate([0, -23.95-3.2/2, flange_dia]) rotate([0, -90, 0])
+                bbs_half_permaprotoboard_standoffs(6, 8/2, 10);
+        }
+        union()
+        {
+            translate([-2.7, bbs_bannana_connector_spacing()/2, flange_dia/4-0.5])
+                rotate([0, 90, 0]) bbs_bannana_connector_cutout(6);
+            translate([-2.7, -bbs_bannana_connector_spacing()/2, flange_dia/4-0.5])
+                rotate([0, 90, 0]) bbs_bannana_connector_cutout(6);
+            translate([-2.7, bbs_bannana_connector_spacing()/2, 3*flange_dia/4-0.5])
+                rotate([0, 90, 0]) bbs_bannana_connector_cutout(6);
+            translate([-2.7, -bbs_bannana_connector_spacing()/2, 3*flange_dia/4-0.5])
+                rotate([0, 90, 0]) bbs_bannana_connector_cutout(6);
+            translate([-2.7, 0, flange_dia]) bbs_half_permaprotoboard_standoffs(6, screw_6_size(), 10);
+            translate([2.7, -23.95-3.2/2, flange_dia]) rotate([0, -90, 0])
+                bbs_half_permaprotoboard_standoffs(10, screw_6_size()/2, 10);
+        }
+    }
+}
+//
+// Examples
+//
 //extrusion_clip(10);
-//rotate([0, 90, 0]) extrusion_banana();
+//rotate([0, 90, 0]) extrusion_banana(0);
 //translate([0, 20, 0]) extrusion_mount_base();
-extrusion_dual_mount_base();
-//extrusion_stand();
+//extrusion_dual_mount_base();
+//extrusion_mount_lens(6.03, 30, 8);
+//extrusion_mount_lens(9.8, 30, 8);
+//rotate([0, 90, 0]) extrusion_circuit(25);
+extrusion_stand_2(true, 1);
 //extrusion_plate(10, 10);

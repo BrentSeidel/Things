@@ -179,9 +179,46 @@ module bbs_LCD_backpack()
 
 
 //--------------------------------------------------------------------------------------
+// Model Ping Sonar sensor
+//
+// The sensor comes from Parallax and is designed for their BASIC stamp series of
+// controllers.  With a bit of work, it can be used by other microcontrollers.  Here
+// is a model and a mount for it.
+//
+
+module bbs_ping_sonar_standoffs(height, radius, facets)
+{
+    hole_radius = 3.10/2;
+    translate([1.03+hole_radius, 1.24+hole_radius, 0]) cylinder(h=height, r=radius, $fn=facets);
+    translate([41.41+hole_radius, 17.19+hole_radius, 0]) cylinder(h=height, r=radius, $fn=facets);
+}
+
+module bbs_ping_sonar()
+{
+    hole_radius = 3.10/2;
+    sensor_rad = 16.16/2;
+    sensor_height = 12.28;
+    difference()
+    {
+        union()
+        {
+            cube([45.51, 21.27, 2]);
+            translate([1.89+sensor_rad, 2.16+sensor_rad, 2]) cylinder(h=sensor_height, r=sensor_rad);
+            translate([43.53-sensor_rad, 2.16+sensor_rad, 2]) cylinder(h=sensor_height, r=sensor_rad);
+            translate([19.19, -7.79, 2]) cube([7.6, 10.57, 2.99]);
+        }
+        union()
+        {
+            translate([0, 0, -1]) bbs_ping_sonar_standoffs(4, hole_radius, 12);
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------
 color("red") bbs_pwm16();
 color("red") translate([0, 40, 0]) bbs_ra8875();
 color("red") translate([70, 0, 0]) bbs_bme280();
 color("red") translate([70, 40, 0]) bbs_LCD_backpack();
 color("green") translate([90, 0, 0]) bbs_vl53l0x();
+color("blue") translate([120, 0, 0]) bbs_ping_sonar();
 

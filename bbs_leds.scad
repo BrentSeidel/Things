@@ -6,6 +6,7 @@
 // diameter - the diameter of the LED in mm
 // height - the hight (thickness) in mm
 //
+use <bbs_t_extrusion.scad>
 
 module bbs_led_mount(diameter, height)
 {
@@ -28,11 +29,11 @@ module bbs_led_cutout(diameter, height)
 {
     translate([0, 0, -0.5]) cylinder(h=height + 1, r=diameter/2 + 2);
 }
-//
+//-------------------------------------------------------------------------
 // Mount for an LED to attach to an aluminum extrusion.  This inserts into a mount defined in 
 // the bbs_t_extrusion file.
 //
-module extrusion_led()
+module extrusion_led(len)
 {
     flange_dia = 5.8;
     lead_space = 1.9;
@@ -41,14 +42,14 @@ module extrusion_led()
     {
         union()
         {
-            rotate([0, 0, 30]) cylinder(r=3, h=25, $fn=6);
-            translate([-small_r, 0, 25+flange_dia/2]) rotate([0, 90, 0]) cylinder(r=flange_dia/2, h=2, $fn=10);
-            translate([-small_r, -flange_dia/2, 25]) cube([2, flange_dia, flange_dia/2]);
+            extrusion_mount_fitting(len);
+            translate([-small_r, 0, flange_dia/2]) rotate([0, 90, 0]) cylinder(r=flange_dia/2, h=2, $fn=10);
+            translate([-small_r, -flange_dia/2, 0]) cube([2, flange_dia, flange_dia/2]);
         }
         union()
         {
-            translate([-2.7, lead_space/2, 24.5+flange_dia/2]) cube([3, 1, 1]);
-            translate([-2.7, -1-lead_space/2, 24.5+flange_dia/2]) cube([3, 1, 1]);
+            translate([-2.7, lead_space/2, flange_dia/2-0.5]) cube([3, 1, 1]);
+            translate([-2.7, -1-lead_space/2, flange_dia/2-0.5]) cube([3, 1, 1]);
         }
     }
 }
@@ -73,7 +74,7 @@ module bbs_extrusion_led_hood(len, thickness)
 // Mount for an CdS photosensor to attach to an aluminum extrusion.  This inserts into a mount defined in 
 // the bbs_t_extrusion file.
 //
-module extrusion_CdS()
+module extrusion_CdS(len)
 {
     flange_dia = 5.8;
     lead_space = 3.1;
@@ -82,20 +83,34 @@ module extrusion_CdS()
     {
         union()
         {
-            rotate([0, 0, 30]) cylinder(r=3, h=25, $fn=6);
-            translate([-small_r, 0, 25+flange_dia/2]) rotate([0, 90, 0]) cylinder(r=flange_dia/2, h=2, $fn=10);
-            translate([-small_r, -flange_dia/2, 25]) cube([2, flange_dia, flange_dia/2]);
+            extrusion_mount_fitting(len);
+            translate([-small_r, 0, flange_dia/2]) rotate([0, 90, 0]) cylinder(r=flange_dia/2, h=2, $fn=10);
+            translate([-small_r, -flange_dia/2, 0]) cube([2, flange_dia, flange_dia/2]);
         }
         union()
         {
-            translate([-2.7, lead_space/2, 24.5+flange_dia/2]) cube([3, 1, 1]);
-            translate([-2.7, -1-lead_space/2, 24.5+flange_dia/2]) cube([3, 1, 1]);
+            translate([-2.7, lead_space/2, flange_dia/2-0.5]) cube([3, 1, 1]);
+            translate([-2.7, -1-lead_space/2, flange_dia/2-0.5]) cube([3, 1, 1]);
         }
     }
 }
+//
+// Target or blocker for light beams
+//
+module extrusion_target(len, rad)
+{
+    small_r = 3*sqrt(3)/2;
+    union()
+    {
+        extrusion_mount_fitting(len);
+        translate([-small_r, 0, rad-0.3]) rotate([0, 90, 0]) cylinder(r=rad, h=small_r*2);
+    }
+}
 
-//rotate([0, -90, 0]) extrusion_led();
+//rotate([0, -90, 0]) extrusion_led(25);
+//rotate([0, -90, 0]) extrusion_CdS(25);
+rotate([0, -90, 0]) extrusion_target(25, 20);
 //translate([0, 10, 0])
-bbs_extrusion_led_hood(25, 2);
+//bbs_extrusion_led_hood(25, 2);
 //bbs_led_mount(5, 2);
 //translate([0, 0, -1]) color("red") bbs_led_cutout(5, 2);

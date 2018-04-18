@@ -2,6 +2,7 @@
 // This file contains a number of different items that can mechanically interface with t-slotted aluminum
 // extrusions.
 //
+use <bbs_boards.scad>
 use <bbs_breadboard.scad>
 use <bbs_constants.scad>
 use <bbs_connectors.scad>
@@ -313,14 +314,44 @@ module extrusion_circuit(len)
     }
 }
 //
+//  Holder for ping sonar module from Parallax Inc.
+//
+module extrusion_ping_sonar(len)
+{
+    flange_dia = 48.53;
+    small_r = 3*sqrt(3)/2;
+    difference()
+    {
+        union()
+        {
+            extrusion_mount_fitting(len);
+            translate([-small_r + 1, -flange_dia/2 + 1, 0])
+            minkowski()
+            {
+                cube([small_r*2 - 2, flange_dia, 25]);
+                sphere(r=1);
+            }
+            translate([0, 46.53/2, 2.24]) rotate([90, 0, 0]) rotate([0, -90, 0])
+                bbs_ping_sonar_standoffs(6, 8/2, 12);
+        }
+        union()
+        {
+            translate([2.7, 46.53/2, 2.24]) rotate([90, 0, 0]) rotate([0, -90, 0])
+                bbs_ping_sonar_standoffs(10, screw_6_size()/2, 12);
+        }
+    }
+}
+//
 // Examples
 //
 //extrusion_clip(10);
-//rotate([0, 90, 0]) extrusion_banana(0);
-//translate([0, 20, 0]) extrusion_mount_base();
+//extrusion_mount_base();
 //extrusion_dual_mount_base();
 //extrusion_mount_lens(6.03, 30, 8);
 //extrusion_mount_lens(9.8, 30, 8);
-//rotate([0, 90, 0]) extrusion_circuit(25);
-extrusion_stand_2(true, 1);
+//extrusion_stand_2(false, 1);
 //extrusion_plate(10, 10);
+
+//rotate([0, 90, 0]) extrusion_circuit(25);
+//rotate([0, 90, 0]) extrusion_banana(0);
+rotate([0, 90, 0]) extrusion_ping_sonar(25);

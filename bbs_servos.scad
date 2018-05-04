@@ -209,10 +209,110 @@ module bbs_sg5010_actuator_plate(length, width)
     }
 }
 
+//--------------------------------
+//  SG-92R dimensions from TowerPro website, http://www.towerpro.com.tw/product/sg5010-4/
+// All dimensions are in mm.
+//
+sg92r_a = 34.5; // Full height, top (including actuator) to bottom (unused in modeling)
+sg92r_b = 22.8; // Length of body
+sg92r_c = 26.7; // Another height top to bottom of body
+sg92r_d = 12.6; // Width
+sg92r_e = 32.5; // Full length including mounting flanges
+sg92r_f = 16.0; // Height from bottom to bottom of mounting flanges
+//
+// Measured dimensions
+//
+sg92r_mount_rad=2.0/2;
+//
+// Model for a SG-92R servo
+//
+module bbs_sg92r()
+{
+    mount_rad=3.46/2;
+    difference()
+    {
+        union()
+        {
+            cube([sg92r_b, sg92r_d, sg92r_c]);
+            translate([-6.69, 4.73, 3.44]) cube([6.7, 3.47, 1.34]);
+            translate([-4.87, 0, sg92r_f]) cube([sg92r_e, sg92r_d, 2.54]);
+            translate([6.92+5.68/2, sg92r_d/2, sg92r_c]) cylinder(r=5.68/2,h=4.88);
+        }
+        union()
+        {
+            translate([-(1.43+mount_rad), sg92r_d/2, 10]) cylinder(r=sg92r_mount_rad,h=40);
+//            translate([-(3.10+mount_rad), 12.81+mount_rad, 20]) cylinder(r=sg92r_mount_rad,h=40);
+            translate([24.3+mount_rad, sg92r_d/2, 10]) cylinder(r=sg92r_mount_rad,h=40);
+//            translate([42.83+mount_rad, 12.81+mount_rad, 20]) cylinder(r=sg92r_mount_rad,h=40);
+        }
+    }
+}
+
+//
+
+module bbs_sg92r_clip()
+{
+    hole_offset = 13;
+    difference()
+    {
+        union()
+        {
+            cube([23, 20, 4]);
+            translate([21, 20-9.9, 0]) cube([2, 9.9, sg92r_d + 4]);
+            translate([23, 20-9.9, sg92r_d]) cube([sg92r_b+2, 9.9, 4]);
+            translate([16, 18, 4]) cube([7, 2, sg92r_d]);
+//
+            translate([23+sg92r_b, 20-9.9, 0]) cube([2, 9.9, sg92r_d + 4]);
+            translate([23+sg92r_b, 0, 0]) cube([20, 20, 4]);
+            translate([23+sg92r_b, 18, 4]) cube([7, 2, sg92r_d]);
+        }
+        union()
+        {
+            translate([hole_offset, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+            translate([21-sg92r_mount_rad, 15, sg92r_d/2]) rotate([-90, 0, 0])
+                cylinder(r=screw_6_size()/2,h=10, $fn=12);
+//
+            translate([hole_offset + 40, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+            translate([25+sg92r_b+sg92r_mount_rad, 15, sg92r_d/2]) rotate([-90, 0, 0])
+                cylinder(r=screw_6_size()/2,h=10, $fn=12);
+            translate([20, -0.1, -0.1]) cube([30, 10.1, 5]);
+        }
+    }
+}
+//
+module bbs_sg92r_bracket()
+{
+    offset_x = (60-sg92r_b-0.5)/2;
+    difference()
+    {
+        union()
+        {
+            cube([60, 20, 4]);
+            translate([0, 20, 0]) cube([offset_x, sg92r_d, 4]);
+            translate([60-offset_x, 20, 0]) cube([offset_x, sg92r_d, 4]);
+        }
+        union()
+        {
+            translate([10, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10);
+            translate([30, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10);
+            translate([50, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10);
+            translate([offset_x-sg92r_mount_rad-1.5, 20+sg92r_d/2, -0.1])
+                cylinder(r=screw_8_size()/2,h=10, $fn=12);
+            translate([60-offset_x+sg92r_mount_rad+1.5, 20+sg92r_d/2, -0.1])
+                cylinder(r=screw_8_size()/2,h=10, $fn=12);
+        }
+    }
+}
+
 
 //translate([24, 0, -sg5010_f]) color("blue") bbs_sg5010();
 //rotate([-90, 0, 0]) bbs_sg5010_clip();
 //bbs_sg5010_actuater_4();
 //bbs_sg5010_actuator_plate(3, 3);
-bbs_sg5010_bracket();
+//bbs_sg5010_bracket();
 
+//translate([23, 0, -sg92r_f]) color("blue") bbs_sg92r();
+//rotate([-90, 0, 0]) bbs_sg92r_clip();
+bbs_sg92r_bracket();
+//bbs_sg92r_actuater_4();
+//bbs_sg92r_actuator_plate(3, 3);

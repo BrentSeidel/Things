@@ -2,6 +2,7 @@
 // Modules for Arduinos.
 //
 use <bbs_pins.scad>
+use <bbs_tray.scad>
 
 //--------------------------------------------------------------------------------------
 // This is a model for the basic Arduino Uno.  The standoff model will probably work
@@ -76,6 +77,55 @@ module bbs_arduino_mega2560_standoffs(height, radius, facets)
     }
 }
 //--------------------------------------------------------------------------------------
-bbs_arduino_uno();
+// Trays
+//
+module bbs_arduino_uno_tray()
+{
+    difference()
+    {
+        union()
+        {
+            bbs_tray(4, 4, false);
+            translate([0, 15,.0]) bbs_arduino_uno_standoffs(7, 5, 20);
+        }
+        union()
+        {
+            translate([0, 15, -0.01]) bbs_arduino_uno_standoffs(10, 2, 20);
+        }
+    }
+}
+//
+module bbs_arduino_mega_tray()
+{
+    difference()
+    {
+        union()
+        {
+            bbs_tray(4, 5, false);
+            translate([10, 15,.0]) bbs_arduino_mega2560_standoffs(7, 3, 20);
+        }
+        union()
+        {
+            translate([10, 15, -0.01]) bbs_arduino_mega2560_standoffs(10, 2, 20);
+            translate([-5, 10, -0.1]) minkowski()
+            {
+                cube([23, 70, 3]);
+                cylinder(r = 2, h = 1, $fn=12);
+            }
+            translate([33, 10, -0.1]) minkowski()
+            {
+                cube([35, 70, 3]);
+                cylinder(r = 2, h = 1, $fn=12);
+            }
+            translate([83, 10, -0.1]) minkowski()
+            {
+                cube([10, 70, 3]);
+                cylinder(r = 2, h = 1, $fn=12);
+            }
+        }
+    }
+}
+//bbs_arduino_uno();
+translate([0, -15, -10]) bbs_arduino_mega_tray();
 
-translate([0, 0, -40]) bbs_arduino_mega2560();
+//translate([10, 0, 0]) bbs_arduino_mega2560();

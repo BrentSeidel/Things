@@ -342,6 +342,55 @@ module extrusion_ping_sonar(len)
     }
 }
 //
+// A clip that will snap onto a 20x20 extrusion.  It is intended to be used as part of another model
+//
+module extrusion_snap_clip(height)
+{
+    difference()
+    {
+        translate([0, -23, 0]) cube([24, 23, height]);
+        translate([2, -24, -0.1]) cube([20, 21, height + 1]);
+    }
+    hull()
+    {
+        translate([10.5, -3, 0]) cylinder(r=2, h=5, $fn=12);
+        translate([12.5, -3, 0]) cylinder(r=2, h=5, $fn=12);
+        translate([11.5, -3, 8]) sphere(r=0.1);
+    }
+    hull()
+    {
+        translate([10.5, -3, height-5]) cylinder(r=2, h=5, $fn=12);
+        translate([12.5, -3, height-5]) cylinder(r=2, h=5, $fn=12);
+        translate([11.5, -3, height-8]) sphere(r=0.1);
+    }
+//
+    hull()
+    {
+        translate([2, -11.5, 0]) cylinder(r=2, h=5, $fn=12);
+        translate([2, -14.5, 0]) cylinder(r=2, h=5, $fn=12);
+        translate([2, -13, 8]) sphere(r=0.1);
+    }
+    hull()
+    {
+        translate([2, -11.5, height-5]) cylinder(r=2, h=5, $fn=12);
+        translate([2, -14.5, height-5]) cylinder(r=2, h=5, $fn=12);
+        translate([2, -13, height-8]) sphere(r=0.1);
+    }
+//
+    hull()
+    {
+        translate([22, -11.5, 0]) cylinder(r=2, h=5, $fn=12);
+        translate([22, -14.5, 0]) cylinder(r=2, h=5, $fn=12);
+        translate([22, -13, 8]) sphere(r=0.1);
+    }
+    hull()
+    {
+        translate([22, -11.5, height-5]) cylinder(r=2, h=5, $fn=12);
+        translate([22, -14.5, height-5]) cylinder(r=2, h=5, $fn=12);
+        translate([22, -13, height-8]) sphere(r=0.1);
+    }
+}
+//
 // Examples
 //
 //extrusion_clip(10);
@@ -354,4 +403,6 @@ module extrusion_ping_sonar(len)
 
 //rotate([0, 90, 0]) extrusion_circuit(25);
 //rotate([0, 90, 0]) extrusion_banana(0);
-rotate([0, 90, 0]) extrusion_ping_sonar(25);
+//rotate([0, 90, 0]) extrusion_ping_sonar(25);
+
+extrusion_snap_clip(25);

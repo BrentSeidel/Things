@@ -252,7 +252,7 @@ module bbs_sg92r()
 
 module bbs_sg92r_clip()
 {
-    hole_offset = 13;
+    hole_offset = 15;
     difference()
     {
         union()
@@ -268,11 +268,11 @@ module bbs_sg92r_clip()
         }
         union()
         {
-            translate([hole_offset, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+            translate([hole_offset, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=12);
             translate([21-sg92r_mount_rad, 15, sg92r_d/2]) rotate([-90, 0, 0])
                 cylinder(r=screw_6_size()/2,h=10, $fn=12);
 //
-            translate([hole_offset + 40, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=10);
+            translate([hole_offset + 40, 10, -0.1]) cylinder(r=screw_m4_size()/2, h=4.2, $fn=12);
             translate([25+sg92r_b+sg92r_mount_rad, 15, sg92r_d/2]) rotate([-90, 0, 0])
                 cylinder(r=screw_6_size()/2,h=10, $fn=12);
             translate([20, -0.1, -0.1]) cube([30, 10.1, 5]);
@@ -293,9 +293,9 @@ module bbs_sg92r_bracket()
         }
         union()
         {
-            translate([10, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10);
-            translate([30, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10);
-            translate([50, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10);
+            translate([10, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10, $fn=12);
+            translate([30, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10, $fn=12);
+            translate([50, 10, -0.1]) cylinder(r=screw_8_size()/2,h=10, $fn=12);
             translate([offset_x-sg92r_mount_rad-1.5, 20+sg92r_d/2, -0.1])
                 cylinder(r=screw_8_size()/2,h=10, $fn=12);
             translate([60-offset_x+sg92r_mount_rad+1.5, 20+sg92r_d/2, -0.1])
@@ -309,10 +309,10 @@ module bbs_sg92r_bracket()
 //rotate([-90, 0, 0]) bbs_sg5010_clip();
 //bbs_sg5010_actuater_4();
 //bbs_sg5010_actuator_plate(3, 3);
-//bbs_sg5010_bracket();
+bbs_sg5010_bracket();
 
 //translate([23, 0, -sg92r_f]) color("blue") bbs_sg92r();
 //rotate([-90, 0, 0]) bbs_sg92r_clip();
-bbs_sg92r_bracket();
+//bbs_sg92r_bracket();
 //bbs_sg92r_actuater_4();
 //bbs_sg92r_actuator_plate(3, 3);

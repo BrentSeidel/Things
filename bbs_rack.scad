@@ -82,6 +82,14 @@ module bbs_rack_raw(rack_width, rack_length, frames)
                     bbs_prism2(5, 2);
             translate([rack_length - 2, rack_width + 5, 15 + rail_offset]) rotate([270, 0, 0])
                     rotate([0, 90, 0]) bbs_prism2(4, 2);
+            //
+            //  Side stiffeners
+            //
+            for(a = [23:22:rack_length-40])
+            {
+                translate([a + 10, 2, rail_offset+12]) cube([1, 3, height-rail_offset-12]);
+                translate([a + 10, rack_width+5, rail_offset+12]) cube([1, 3, height-rail_offset-12]);
+            }
         }
         //
         // Parts describing things to be removed
@@ -89,7 +97,7 @@ module bbs_rack_raw(rack_width, rack_length, frames)
         union()
         {
             //
-            // Slides fpr rails
+            // Slides for rails
             //
             translate([2, 5.01, 11 + rail_offset]) rotate([0, 90, 0]) rotate([0, 0, -90])
                     bbs_prism1(5.02, rack_length);
@@ -139,7 +147,7 @@ module bbs_rack_raw(rack_width, rack_length, frames)
 
 union()
 {
-    bbs_rack(2, 2, 2);
+    bbs_rack(2, 5, 2);
 //    translate([2, 5, 5 + 3]) color("red") bbs_tray();
 //    translate([rack_length + 2, 0, 18])rotate([0, 270, 0]) color("blue") bbs_panel(2);
 }

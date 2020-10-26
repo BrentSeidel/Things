@@ -90,7 +90,7 @@ module bbs_16mm_switch_cutout(height)
 }
 
 //-------------------------------------------------------------------------------------
-//  Model for a 10k potentiometer.  It will probably work for other pots as well.  However,
+//  Model for 10k potentiometers.  It will probably work for other pots as well.  However,
 //  I ordered some more 10k pots and they were a different size, so this has been renamed to
 //  bbs_pot1() and the new pots will be bbs_pot2().
 //
@@ -120,6 +120,35 @@ module bbs_pot2_cutout(height)
     translate([7.11-0.1+7.74/2, -2.71/2-0.1, 0]) cube([1.17+0.2, 2.71+0.2, height]);
 }
 
+module bbs_pot2_knob()
+{
+  difference()
+  {
+    union()
+    {
+      difference()
+      {
+        minkowski()
+        {
+          cylinder(r=5, h=15);
+          sphere(r=5);
+        }
+        translate([0, 0, -5]) cylinder(r=20, h=5);
+      }
+      translate([-1, 0, 0]) cube([2, 12, 22]);
+    }
+    union()
+    {
+      translate([0, 0, -1]) cylinder(r1=6.2/2, r2=5.8/2, h=14);
+      translate([0, 0, -1]) difference()
+      {
+        cylinder(r=8, h=14);
+        cylinder(r=6, h=14);
+      }
+    }
+  }
+}
+
 //-------------------------------------------------------------------------------------
 bbs_spdt_switch();
 translate([0, 20, 0]) bbs_sp8t_switch();
@@ -135,3 +164,5 @@ translate([60, 20, 0]) bbs_pot1_cutout(2);
 
 translate([90, -20, 0]) bbs_pot2();
 translate([90, 20, 0]) bbs_pot2_cutout(2);
+translate([90, -60, 0]) bbs_pot2_knob();
+

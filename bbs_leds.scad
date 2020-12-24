@@ -107,9 +107,9 @@ module extrusion_target(len, rad)
     }
 }
 
-//rotate([0, -90, 0]) extrusion_led(25);
+rotate([0, -90, 0]) extrusion_led(25);
 //rotate([0, -90, 0]) extrusion_CdS(25);
-rotate([0, -90, 0]) extrusion_target(25, 20);
+//rotate([0, -90, 0]) extrusion_target(25, 20);
 //translate([0, 10, 0])
 //bbs_extrusion_led_hood(25, 2);
 //bbs_led_mount(5, 2);

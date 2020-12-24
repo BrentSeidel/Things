@@ -177,6 +177,41 @@ module bbs_LCD_backpack()
     }
 }
 
+//--------------------------------------------------------------------------------------
+// Model for TB6612 Dual H-Bridge Driver
+// AdaFruit item #2448
+//
+// This board is actually designed to mount on the back of a character LCD using the header
+// strip.  This board has only one mounting hole, which unfortunately doesn't line up with
+// the mounting hole on the 20x4 character LCD panel that I have.
+//
+
+module bbs_tb6612_standoffs(height, radius, facets)
+{
+    hole_radius = 2.15/2;
+    union()
+    {
+      translate([1.37+hole_radius, 1.42+hole_radius, 0]) cylinder($fn=facets, h=height, r=radius);
+      translate([22.78+hole_radius, 1.42+hole_radius, 0]) cylinder($fn=facets, h=height, r=radius);
+    }
+}
+
+module bbs_tb6612()
+{
+    hole_radius = 2.15/2;
+    width = 19.03;
+    length = 27.00;
+    difference()
+  { 
+        union()
+        {
+            cube([length, width, 2], center=false);
+            translate([5.62, 2.47, 0])  bbs_header(6);
+            translate([2.00, 15.73, 0])  bbs_header(10);
+        }
+        translate([0, 0, -1]) bbs_tb6612_standoffs(4, hole_radius, 12);
+    }
+}
 
 //--------------------------------------------------------------------------------------
 // Model Ping Sonar sensor
@@ -221,4 +256,5 @@ color("red") translate([70, 0, 0]) bbs_bme280();
 color("red") translate([70, 40, 0]) bbs_LCD_backpack();
 color("green") translate([90, 0, 0]) bbs_vl53l0x();
 color("blue") translate([120, 0, 0]) bbs_ping_sonar();
+color("green") translate([130, 40, 0]) bbs_tb6612();
 

@@ -21,4 +21,5 @@ function screw_2_size() = 2.10 + 0.25;
 function screw_4_size() = 2.80 + 0.15;
 function screw_6_size() = 3.38 + 0.3;
 function screw_8_size() = 4.06 + 0.3;
-function screw_m4_size() = 3.90 + 0.4;
+function screw_m3_size() = 3.00 + 0.3;
+function screw_m4_size() = 4.00 + 0.3;

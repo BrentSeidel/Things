@@ -29,6 +29,13 @@ module bbs_led_cutout(diameter, height)
 {
     translate([0, 0, -0.5]) cylinder(h=height + 1, r=diameter/2 + 2);
 }
+//
+//  I got some 5mm oval LEDs.  They don't work quite as well in the above LED mounts.
+//
+module bbs_led_oval(height)
+{
+  translate([0, 0, -0.5]) scale([5, 3.6, 1]) cylinder(h=height + 1, r=0.5, $fn=20);
+}
 //-------------------------------------------------------------------------
 // Mount for an LED to attach to an aluminum extrusion.  This inserts into a mount defined in 
 // the bbs_t_extrusion file.
@@ -107,7 +114,8 @@ module extrusion_target(len, rad)
     }
 }
 
-rotate([0, -90, 0]) extrusion_led(25);
+//bbs_led_oval(5);
+//rotate([0, -90, 0]) extrusion_led(25);
 //rotate([0, -90, 0]) extrusion_CdS(25);
 //rotate([0, -90, 0]) extrusion_target(25, 20);
 //translate([0, 10, 0])

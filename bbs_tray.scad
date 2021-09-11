@@ -31,29 +31,29 @@ module bbs_tray(frames_wide, frames_long, frames_high)
 //
 module bbs_tray_raw(rack_width, rack_length, knobs=true)
 {
-    difference()
+  difference()
+  {
+    union()
     {
-        union()
-        {
-            cube([rack_length, rack_width, 3], center=false); // Base
-            translate([0, 0, 6]) rotate([0, 90, 0]) rotate([0, 0, -90]) bbs_prism1(5, rack_length); // Rail
-            translate([0, rack_width, 1]) rotate([0, 90, 0]) rotate([0, 0, 90])
-                    bbs_prism1(5, rack_length); // Rail
-            translate([0, 0, 0]) cube([rack_length, 8, 7], center=false); // Side
-            translate([0, rack_width - 8, 0]) cube([rack_length, 8, 7], center=false); // Side
+      cube([rack_length, rack_width, 3], center=false); // Base
+      translate([0, 0, 6]) rotate([0, 90, 0]) rotate([0, 0, -90]) bbs_prism1(5, rack_length); // Rail
+      translate([0, rack_width, 1]) rotate([0, 90, 0]) rotate([0, 0, 90])
+              bbs_prism1(5, rack_length); // Rail
+      translate([0, 0, 0]) cube([rack_length, 8, 7], center=false); // Side
+      translate([0, rack_width - 8, 0]) cube([rack_length, 8, 7], center=false); // Side
 //
-            if (knobs)
-            {
-                translate([rack_length, 3, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
-                translate([rack_length + 5, 0, 0]) cube([5, 8, 8], center=false); // Knob
-                translate([rack_length, rack_width - 4, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
-                translate([rack_length + 5, rack_width - 8, 0]) cube([5, 8, 8], center=false); // Knob
-            }
-        }
-        union()
-        {
-        }
+      if (knobs)
+      {
+        translate([rack_length, 3, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
+        translate([rack_length + 5, 0, 0]) cube([5, 8, 8], center=false); // Knob
+        translate([rack_length, rack_width - 4, 4]) rotate([0, 90, 0]) cylinder($fn=12, h=5, r=3);
+        translate([rack_length + 5, rack_width - 8, 0]) cube([5, 8, 8], center=false); // Knob
+      }
     }
+    union()
+    {
+    }
+  }
 }
 
 bbs_tray(2, 2, false);

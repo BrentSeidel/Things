@@ -271,7 +271,7 @@ module bbs_GPIO()
   {
     union()
     {
-      cube([99.43, 47.14, 2]);
+      translate([0, 0, -1.4]) cube([99.43, 47.14, 1.4]);
       translate([55.87, 6.58, 0]) rotate([0, 0, 180]) bbs_2x5_rt();
       translate([11.42, 40.80, 0]) bbs_2x5_rt();
       translate([33.01, 40.80, 0]) bbs_2x5_rt();
@@ -280,14 +280,44 @@ module bbs_GPIO()
     }
     union()
     {
-      bbs_GPIO_standoffs(4, 1.25, 12);
+      translate([0, 0, -1.4]) bbs_GPIO_standoffs(4, 1.25, 12);
     }
   }
 }
 
+//--------------------------------------------------------------------------------------
+// Model for 10 conductor ribbon cable breakout board
+// This board in contained in the Circuits repository as Ribbon-10.
+
+
+module bbs_Ribbon10_standoffs(height, radius, facets)
+{
+  union()
+  {
+    translate([5.08, 5.08, -0.1]) cylinder($fn=facets, h=height, r=radius);
+    translate([31.75, 5.08, -0.1]) cylinder($fn=facets, h=height, r=radius);
+  }
+}
+
+module bbs_Ribbon10()
+{
+  difference()
+  {
+    union()
+    {
+      translate([0, 0, -1.4]) cube([36.83, 24.13, 1.4]);
+      translate([24.13, 6.58, 0]) rotate([0, 0, 180]) bbs_2x5_rt();
+    }
+    union()
+    {
+      translate([0, 0, -1.4]) bbs_Ribbon10_standoffs(4, 1.25, 12);
+    }
+  }
+}
 
 //--------------------------------------------------------------------------------------
 bbs_GPIO();
+//bbs_Ribbon10();
 //color("red") bbs_pwm16();
 //color("red") translate([0, 40, 0]) bbs_ra8875();
 //color("red") translate([70, 0, 0]) bbs_bme280();

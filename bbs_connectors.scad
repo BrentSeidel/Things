@@ -181,12 +181,25 @@ module bbs_micro_usb_cutout(height)
 }
 
 //--------------------------------------------------------------------------------------
-bbs_d_cutout(1, 2);
-translate([0, 15, 0]) bbs_tip_connector_cutout(2);
-translate([10, 15, 0]) bbs_tip_connector();
-translate([0, 30, 0]) bbs_bannana_connector_cutout(2);
-translate([10, 30, 0]) bbs_bannana_connector();
-translate([0, 45, 0]) bbs_rj45_panel_cutout(2);
-translate([0, 60, 0]) bbs_usb_b_cutout(2);
-translate([0, 75, 0]) bbs_micro_usb_cutout(2);
+// These are Multipin connectors.
+//
+//  Two rows of 5 pins, right angle connector
+module bbs_2x5_rt()
+{
+  union()
+  {
+    translate([0, 0, -3.25]) cube([10.91, 4.94, 9.14]);
+    translate([-4.63, 4.61, 0]) cube([20.30, 9.00, 8.93]);
+  }
+}
+//--------------------------------------------------------------------------------------
+bbs_2x5_rt();
+//bbs_d_cutout(1, 2);
+//translate([0, 15, 0]) bbs_tip_connector_cutout(2);
+//translate([10, 15, 0]) bbs_tip_connector();
+//translate([0, 30, 0]) bbs_bannana_connector_cutout(2);
+//translate([10, 30, 0]) bbs_bannana_connector();
+//translate([0, 45, 0]) bbs_rj45_panel_cutout(2);
+//translate([0, 60, 0]) bbs_usb_b_cutout(2);
+//translate([0, 75, 0]) bbs_micro_usb_cutout(2);
 

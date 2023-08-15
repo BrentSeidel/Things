@@ -5,6 +5,7 @@
 // provide measurements, I can add additional boards...
 //
 use <bbs_pins.scad>
+use <bbs_connectors.scad>
 
 //--------------------------------------------------------------------------------------
 // Model for the RA8875 LCD breakout board
@@ -250,11 +251,48 @@ module bbs_ping_sonar()
 }
 
 //--------------------------------------------------------------------------------------
-color("red") bbs_pwm16();
-color("red") translate([0, 40, 0]) bbs_ra8875();
-color("red") translate([70, 0, 0]) bbs_bme280();
-color("red") translate([70, 40, 0]) bbs_LCD_backpack();
-color("green") translate([90, 0, 0]) bbs_vl53l0x();
-color("blue") translate([120, 0, 0]) bbs_ping_sonar();
-color("green") translate([130, 40, 0]) bbs_tb6612();
+// Model for dual MCP23017 GPIO Board
+// This board in contained in the Circuits repository as IOBoard.
+
+module bbs_GPIO_standoffs(height, radius, facets)
+{
+  union()
+  {
+    translate([3.82, 3.82, -0.1]) cylinder($fn=facets, h=height, r=radius);
+    translate([3.82, 40.640, -0.1]) cylinder($fn=facets, h=height, r=radius);
+    translate([95.250, 3.82, -0.1]) cylinder($fn=facets, h=height, r=radius);
+    translate([95.250, 40.640, -0.1]) cylinder($fn=facets, h=height, r=radius);
+  }
+}
+
+module bbs_GPIO()
+{
+  difference()
+  {
+    union()
+    {
+      cube([99.43, 47.14, 2]);
+      translate([55.87, 6.58, 0]) rotate([0, 0, 180]) bbs_2x5_rt();
+      translate([11.42, 40.80, 0]) bbs_2x5_rt();
+      translate([33.01, 40.80, 0]) bbs_2x5_rt();
+      translate([53.71, 40.80, 0]) bbs_2x5_rt();
+      translate([73.655, 40.80, 0]) bbs_2x5_rt();
+    }
+    union()
+    {
+      bbs_GPIO_standoffs(4, 1.25, 12);
+    }
+  }
+}
+
+
+//--------------------------------------------------------------------------------------
+bbs_GPIO();
+//color("red") bbs_pwm16();
+//color("red") translate([0, 40, 0]) bbs_ra8875();
+//color("red") translate([70, 0, 0]) bbs_bme280();
+//color("red") translate([70, 40, 0]) bbs_LCD_backpack();
+//color("green") translate([90, 0, 0]) bbs_vl53l0x();
+//color("blue") translate([120, 0, 0]) bbs_ping_sonar();
+//color("green") translate([130, 40, 0]) bbs_tb6612();
 

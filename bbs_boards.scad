@@ -5,6 +5,7 @@
 // provide measurements, I can add additional boards...
 //
 use <bbs_pins.scad>
+use <bbs_components.scad>
 use <bbs_connectors.scad>
 
 //--------------------------------------------------------------------------------------
@@ -271,12 +272,14 @@ module bbs_GPIO()
   {
     union()
     {
-      translate([0, 0, -1.4]) cube([99.43, 47.14, 1.4]);
+      translate([0, 0, -1.4]) color("red") cube([99.43, 47.14, 1.4]);
       translate([55.87, 6.58, 0]) rotate([0, 0, 180]) bbs_2x5_rt();
       translate([11.42, 40.80, 0]) bbs_2x5_rt();
       translate([33.01, 40.80, 0]) bbs_2x5_rt();
       translate([53.71, 40.80, 0]) bbs_2x5_rt();
       translate([73.655, 40.80, 0]) bbs_2x5_rt();
+      translate([40.63, 28.83, 0]) rotate([0, 0, 180]) bbs_DIP(28, 0.300);
+      translate([85.08, 28.83, 0]) rotate([0, 0, 180]) bbs_DIP(28, 0.300);
     }
     union()
     {
@@ -305,7 +308,7 @@ module bbs_Ribbon10()
   {
     union()
     {
-      translate([0, 0, -1.4]) cube([36.83, 24.13, 1.4]);
+      translate([0, 0, -1.4]) color("red") cube([36.83, 24.13, 1.4]);
       translate([24.13, 6.58, 0]) rotate([0, 0, 180]) bbs_2x5_rt();
     }
     union()

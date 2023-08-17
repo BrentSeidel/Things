@@ -32,9 +32,24 @@ module bbs_led_cutout(diameter, height)
 //
 //  I got some 5mm oval LEDs.  They don't work quite as well in the above LED mounts.
 //
+//  Model for the cutout
 module bbs_led_oval(height)
 {
   translate([0, 0, -0.5]) scale([5, 3.6, 1]) cylinder(h=height + 1, r=0.5, $fn=20);
+}
+//  Model for the LED.  The parameter specifies the color of the LED.
+module bbs_led_C5SMF(clr)
+{
+  translate([-2.54/2-0.25, 0, 0]) union()
+  {
+    translate([0, 0, 0]) scale([1, 0.735, 1]) color(clr) union()
+    {
+      cylinder(h=5, r=2.55, $fn=20);
+      translate([0, 0, 5]) scale([1, 1, 1]) sphere(r=2.55, $fn=20);
+    }
+    translate([-2.54/2, -0.25, -25]) color("silver") cube([0.5, 0.5, 25]);
+    translate([2.54/2, -0.25, -24]) color("silver") cube([0.5, 0.5, 24]);
+  }
 }
 //-------------------------------------------------------------------------
 // Mount for an LED to attach to an aluminum extrusion.  This inserts into a mount defined in 
@@ -114,6 +129,7 @@ module extrusion_target(len, rad)
     }
 }
 
+bbs_led_C5SMF("red");
 //bbs_led_oval(5);
 //rotate([0, -90, 0]) extrusion_led(25);
 //rotate([0, -90, 0]) extrusion_CdS(25);

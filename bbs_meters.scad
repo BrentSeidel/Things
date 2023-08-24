@@ -24,7 +24,7 @@ module bbs_meter_1_cutout(depth)
   width = 64.28;
   height = 56.24;
   screw = 3.75/2;
-  translate([0, 1.98-(height-47.85)/2, -0.1]) cylinder(r=47.85/2, h=depth);
+  translate([0, 2.48-(height-47.85)/2, -0.1]) cylinder(r=48.35/2, h=depth);
   translate([(width/2 - 4.5 - screw), -(height/2 - 12.76 - screw), -0.1]) cylinder(r=screw, h=depth, $fn=12);
   translate([-(width/2 - 4.5 - screw), -(height/2 - 12.76 - screw), -0.1]) cylinder(r=screw, h=depth, $fn=12);
 }
@@ -50,7 +50,7 @@ module bbs_meter_2_cutout(depth)
   width = 99.81;
   height = 79.35;
   screw = 5/2;
-  translate([0, 2.66-(height-57.75)/2, -0.1]) cylinder(r=57.75/2, h=depth);
+  translate([0, 3.16-(height-57.75)/2, -0.1]) cylinder(r=58.25/2, h=depth);
   translate([(width/2 - 12.5 - screw), -(height/2 - 16.23 - screw), -0.1]) cylinder(r=screw, h=depth, $fn=12);
   translate([-(width/2 - 12.5 - screw), -(height/2 - 16.23 - screw), -0.1])
     cylinder(r=screw, h=depth, $fn=12);
